@@ -53,7 +53,10 @@ public class customPersistenceUnitInfo implements PersistenceUnitInfo {
         return List.of(
                 "org.example.entities.Product",
                 "org.example.entities.Student",
-                "org.example.entities.Employee"
+                "org.example.entities.Employee",
+                "org.example.entities.oneToOne.Passport",
+                "org.example.entities.oneToOne.Person",
+                "org.example.entities.oneToOne.User"
         );
     }
 

@@ -7,9 +7,13 @@ package org.example;/*
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
 import org.example.entities.Product;
 import org.example.entities.Student;
 import org.example.entities.keys.StudentKey;
+import org.example.entities.oneToOne.Passport;
+import org.example.entities.oneToOne.Person;
+import org.example.entities.oneToOne.User;
 import org.example.persistence.customPersistenceUnitInfo;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 
@@ -22,7 +26,7 @@ public class Main {
         String puName = "pu-name";
         Map<String,String> props = new HashMap<>();
         props.put("hibernate.show_sql","true");
-        props.put("hibernate.hbm2ddl.auto","none");
+        props.put("hibernate.hbm2ddl.auto","create");
 
 //        EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence-unit");
         EntityManagerFactory emf = new HibernatePersistenceProvider()
@@ -33,6 +37,29 @@ public class Main {
         try{
             em.getTransaction().begin();
 
+
+            Person person = new Person();
+            person.setName("Daerego Braide");
+
+            Passport passport = new Passport();
+            passport.setNumber("abcd123");
+
+            person.setPassport(passport);
+            passport.setPerson(person);
+
+            em.persist(person);
+
+            User user = new User();
+            user.setName("Akonzi");
+            user.setDescription("just new desc");
+            em.persist(user);
+//            em.persist(passport);
+
+//            TypedQuery<Person> q = em.createQuery("SELECT p FROM Person p WHERE p.passport.number = :number", Person.class);
+//            q.setParameter("number", "abcd123");
+//            System.out.println(q.getResultList());
+
+
 //            Product p1 = new Product();
 //            p1.setCode("ABC");
 //            p1.setNumber(10);
@@ -41,9 +68,9 @@ public class Main {
 //
 //            em.persist(p1);
 
-            StudentKey id = new StudentKey();
-            id.setCode("ABC");
-            id.setNumber(10);
+//            StudentKey id = new StudentKey();
+//            id.setCode("ABC");
+//            id.setNumber(10);
 //
 //            Student s = new Student();
 //            s.setId(id);
@@ -51,8 +78,8 @@ public class Main {
 //
 //            em.persist(s);
 
-            Student s = em.find(Student.class, id);
-            System.out.println(s);
+//            Student s = em.find(Student.class, id);
+//            System.out.println(s);
 
 
             //operations of the context
