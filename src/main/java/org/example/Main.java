@@ -11,6 +11,8 @@ import jakarta.persistence.TypedQuery;
 import org.example.entities.Product;
 import org.example.entities.Student;
 import org.example.entities.keys.StudentKey;
+import org.example.entities.oneToMany.Comment;
+import org.example.entities.oneToMany.Post;
 import org.example.entities.oneToOne.Passport;
 import org.example.entities.oneToOne.Person;
 import org.example.entities.oneToOne.User;
@@ -37,22 +39,38 @@ public class Main {
         try{
             em.getTransaction().begin();
 
+            Post post = new Post();
+            post.setTitle("post 1");
+            post.setContent("My first post");
 
-            Person person = new Person();
-            person.setName("Daerego Braide");
+            Comment comment1 = new Comment();
+            comment1.setContent("comment 1");
 
-            Passport passport = new Passport();
-            passport.setNumber("abcd123");
+            Comment comment2 = new Comment();
+            comment2.setContent("comment 1");
 
-            person.setPassport(passport);
-            passport.setPerson(person);
+            post.setComments(List.of(comment1,comment2));
+             comment1.setPost(post);
+             comment2.setPost(post);
 
-            em.persist(person);
+            em.persist(post);
+//            em.persist(comment);
 
-            User user = new User();
-            user.setName("Akonzi");
-            user.setDescription("just new desc");
-            em.persist(user);
+//            Person person = new Person();
+//            person.setName("Daerego Braide");
+//
+//            Passport passport = new Passport();
+//            passport.setNumber("abcd123");
+//
+//            person.setPassport(passport);
+//            passport.setPerson(person);
+//
+//            em.persist(person);
+
+//            User user = new User();
+//            user.setName("Akonzi");
+//            user.setDescription("just new desc");
+//            em.persist(user);
 //            em.persist(passport);
 
 //            TypedQuery<Person> q = em.createQuery("SELECT p FROM Person p WHERE p.passport.number = :number", Person.class);
