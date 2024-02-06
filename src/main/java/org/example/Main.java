@@ -6,16 +6,11 @@ package org.example;/*
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.TypedQuery;
-import org.example.entities.Product;
-import org.example.entities.Student;
-import org.example.entities.keys.StudentKey;
-import org.example.entities.oneToMany.Comment;
-import org.example.entities.oneToMany.Post;
-import org.example.entities.oneToOne.Passport;
-import org.example.entities.oneToOne.Person;
-import org.example.entities.oneToOne.User;
+import org.example.entities.entityInheritance.Book;
+import org.example.entities.entityInheritance.ElectronicDevice;
+import org.example.entities.entityInheritance.Product;
+import org.example.entities.manyToMany.Team;
+import org.example.entities.manyToMany.User;
 import org.example.persistence.customPersistenceUnitInfo;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 
@@ -39,22 +34,62 @@ public class Main {
         try{
             em.getTransaction().begin();
 
-            Post post = new Post();
-            post.setTitle("post 1");
-            post.setContent("My first post");
+            var sql = "SELECT p FROM Book p";
+            em.createQuery(sql, Book.class)
+                    .getResultList().forEach(System.out::println);
 
-            Comment comment1 = new Comment();
-            comment1.setContent("comment 1");
+//            Book book = new Book();
+//            book.setId(1L);
+//            book.setAuthor("George");
+//
+//            ElectronicDevice device = new ElectronicDevice();
+//            device.setId(2L);
+//            device.setVoltage(220);
+//
+//            em.persist(book);
+//            em.persist(device);
 
-            Comment comment2 = new Comment();
-            comment2.setContent("comment 1");
-
-            post.setComments(List.of(comment1,comment2));
-             comment1.setPost(post);
-             comment2.setPost(post);
-
-            em.persist(post);
-//            em.persist(comment);
+//            Team team1 = new Team();
+//            team1.setName("Team 1");
+//
+//            Team team2 = new Team();
+//            team2.setName("Team 2");
+//
+//            User user1 = new User();
+//            user1.setName("User 1");
+//
+//            User user2 = new User();
+//            user2.setName("User 2");
+//
+//
+//
+//
+//            team1.setUsers(List.of(user1, user2));
+//            team2.setUsers(List.of(user2));
+//
+//            user1.setTeams(List.of(team1));
+//            user2.setTeams(List.of(team1, team2));
+//
+//            em.persist(user1);
+//            em.persist(user2);
+//            em.persist(team1);
+//            em.persist(team2);
+////            Post post = new Post();
+//            post.setTitle("post 1");
+//            post.setContent("My first post");
+//
+//            Comment comment1 = new Comment();
+//            comment1.setContent("comment 1");
+//
+//            Comment comment2 = new Comment();
+//            comment2.setContent("comment 1");
+//
+//            post.setComments(List.of(comment1,comment2));
+//             comment1.setPost(post);
+//             comment2.setPost(post);
+//
+//            em.persist(post);
+////            em.persist(comment);
 
 //            Person person = new Person();
 //            person.setName("Daerego Braide");
